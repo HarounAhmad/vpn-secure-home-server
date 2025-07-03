@@ -1,0 +1,26 @@
+table inet filter {
+  chain input {
+    type filter hook input priority 0;
+    policy drop;
+
+    iif lo accept
+
+    tcp dport 443 accept
+    udp dport 1194 accept
+
+    ct state established,related accept
+
+    counter log prefix "Dropped Input: " drop
+  }
+
+  chain forward {
+    type filter hook forward priority 0;
+    policy drop;
+
+    include "/etc/nftables/per-client-rules.nft"
+
+    ct state established,related accept
+
+    counter log prefix "Dropped Forward: " drop
+  }
+}
