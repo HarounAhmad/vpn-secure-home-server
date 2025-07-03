@@ -1,55 +1,53 @@
 # Secure OpenVPN Home Server Architecture
 
 ## Purpose
-A hardened, reproducible home server setup using OpenVPN with:
-- Certificate-based client authentication only
+A hardened, reproducible home server design that uses OpenVPN as the single secure entry point:
+- Certificate-based client authentication only (no passwords)
 - Offline Certificate Authority (CA) for signing and revocation
-- Per-client static IP mapping with `client-config-dir`
-- nftables firewall with strict per-client rules
-- Containerized services (Minecraft server, VSCode-server, Grafana)
-- VPN as the single entry point; no other ports exposed
+- Per-client static IP mapping using `client-config-dir`
+- nftables firewall with default-deny policy and per-client allowlists
+- Containerized services (Minecraft server, VSCode server, Grafana) accessible only over VPN
 
 ## Key Security Features
 - TLS 1.3 enforced
 - AES-256-GCM encryption, SHA512 auth
-- `tls-crypt` to hide handshake traffic and resist port scanning
+- `tls-crypt` hides handshake traffic, blocks port scans
 - One active connection per cert (`duplicate-cn` off)
-- CRL-based revocation handled offline
-- Admin and guest clients restricted by static IPs and nftables rules
+- CRL-based revocation managed by offline CA
+- Static VPN IPs + nftables rules restrict each client's access scope
 
 ## Repo Structure
+```
 /
-├── docs/         # Detailed architecture, threat model, offline CA workflow, firewall design  
-├── openvpn/      # Sample server.conf and example ccd static IP mappings  
-├── nftables/     # Base firewall rules and per-client rules  
-├── scripts/      # Scripts for CA initialization, cert signing, revocation, and CRL deployment  
-├── k8s/          # Example Kubernetes manifests for game servers and admin tools
+├── docs/         # Architecture overview, threat model, offline CA workflow, firewall design
+├── openvpn/      # Example server.conf, CCD static IP mappings
+├── nftables/     # Base ruleset and per-client IP allowlists
+├── scripts/      # Offline CA scripts: init, sign, revoke, deploy CRL
+├── k8s/          # Example Kubernetes manifests: Minecraft, Grafana, VSCode server
+```
 
+## Who This Is For
+- Anyone building a low-attack-surface home server
+- Wants all access gated by cert-auth VPN only
+- Needs strict offline cert generation and revocation
 
+## Out of Scope
+- Hardware tokens (YubiKeys, smartcards)
+- Hosted or online CAs
+- Directly exposed SSH or web services
 
-## Who Should Use This
-- Anyone who wants a minimal-attack-surface home server
-- Needs strict VPN gating and per-client access control
-- Wants a reproducible, offline-signed cert workflow
-
-## What’s Not Included
-- Physical hardware tokens (YubiKeys, smartcards)
-- Cloud CA or automated cert signing on the server
-- Public-facing SSH or web services outside VPN
-
-## How to Start
-1. Read `docs/architecture.md` and `docs/threat-model.md` for full overview.
-2. Use `scripts/init-easyrsa.sh` to set up your offline CA.
-3. Generate client certs with `sign-client-cert.sh` and map static IPs in `openvpn/ccd-example/`.
-4. Apply `nftables/` rules to enforce per-client access.
-5. Deploy containerized services behind the VPN using the `k8s/` examples.
+## Quickstart
+1. Read [docs/architecture.md](docs/architecture.md) and [docs/threat-model.md](docs/threat-model.md).
+2. Run `scripts/init-easyrsa.sh` to initialize the offline CA.
+3. Sign new client certs with `sign-client-cert.sh` and assign static IPs via CCD.
+4. Apply `nftables/` base + per-client rules for strict access.
+5. Deploy your containerized services behind the VPN with the `k8s/` manifests.
+6. Revoke and redeploy `crl.pem` using `revoke-cert.sh` and `deploy-crl.sh` as needed.
 
 ## Disclaimer
-This is a reference architecture for educational purposes. Audit every config, rotate keys properly, and adapt to your real environment.
+This is a reference blueprint for educational use only. Always audit configs, rotate keys, and adapt to your actual threat model.
 
----
-
-**Links**
-- [docs/architecture.md](docs/architecture.md)
-- [docs/offline-ca.md](docs/offline-ca.md)
-- [docs/firewall.md](docs/firewall.md)
+## Docs
+- [Architecture](docs/architecture.md)
+- [Offline CA](docs/offline-ca.md)
+- [Firewall](docs/firewall.md)
