@@ -14,17 +14,17 @@ Never expose your CA private key to the VPN server.
 ---
 
 ## Directory Structure (Example)
-~/vpn-ca/
-├── pki/
-├── vars
-├── easy-rsa/
-├── output/
-├── server.crt
-├── server.key
-├── ca.crt
-├── client1.crt
-├── client1.key
-├── crl.pem
+~/vpn-ca/ <br>
+├── pki/ <br>
+├── vars <br>
+├── easy-rsa/ <br>
+├── output/ <br>
+├── server.crt <br>
+├── server.key <br>
+├── ca.crt <br>
+├── client1.crt <br>
+├── client1.key <br>
+├── crl.pem <br>
 
 ---
 
