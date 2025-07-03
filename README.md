@@ -19,11 +19,11 @@ A hardened, reproducible home server setup using OpenVPN with:
 
 ## Repo Structure
 /
-├── docs/ # Detailed architecture, threat model, offline CA workflow, firewall design
-├── openvpn/ # Sample server.conf and example ccd static IP mappings
-├── nftables/ # Base firewall rules and per-client rules
-├── scripts/ # Scripts for CA initialization, cert signing, revocation, and CRL deployment
-├── k8s/ # Example Kubernetes manifests for game servers and admin tools
+├── docs/         # Detailed architecture, threat model, offline CA workflow, firewall design  
+├── openvpn/      # Sample server.conf and example ccd static IP mappings  
+├── nftables/     # Base firewall rules and per-client rules  
+├── scripts/      # Scripts for CA initialization, cert signing, revocation, and CRL deployment  
+├── k8s/          # Example Kubernetes manifests for game servers and admin tools
 
 
 
