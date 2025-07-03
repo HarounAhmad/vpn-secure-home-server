@@ -51,3 +51,30 @@ This is a reference blueprint for educational use only. Always audit configs, ro
 - [Architecture](docs/architecture.md)
 - [Offline CA](docs/offline-ca.md)
 - [Firewall](docs/firewall.md)
+
+
+### Test Run
+
+## Zero Failure Dev Quickstart
+
+# Build your offline CA locally:
+./scripts/init-easyrsa.sh
+
+# Verify certs/keys exist:
+tree ~/vpn-test
+
+# Start VPN server in container:
+docker run --name vpn-server \
+  --cap-add=NET_ADMIN \
+  --device /dev/net/tun \
+  -p 1194:1194/udp \
+  -v ~/vpn-test:/etc/openvpn \
+  my-openvpn-image
+
+# Or for dev:
+docker run -it ubuntu bash
+# inside: apt install openvpn && openvpn --config /etc/openvpn/server.conf
+
+# On host, run:
+sudo openvpn --config client.ovpn
+# Look for: Initialization Sequence Completed

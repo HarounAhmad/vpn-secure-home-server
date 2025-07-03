@@ -1,5 +1,6 @@
-# Admin client: full LAN
-ip saddr 10.8.0.10 oif eth0 accept
+# Admin client: full LAN access
+ip saddr 10.8.0.10 accept
 
-# Guest client: Plex server only
-ip saddr 10.8.0.20 oif eth0 ip daddr 192.168.0.46 tcp dport 25565 accept
+# Guest client: only Minecraft server at 192.168.0.46:25565
+ip saddr 10.8.0.20 ip daddr 192.168.0.46 tcp dport 25565 accept
+ip saddr 10.8.0.20 ip daddr 192.168.0.46 udp dport 25565 accept

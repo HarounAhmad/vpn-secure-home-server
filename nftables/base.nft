@@ -3,13 +3,19 @@ table inet filter {
     type filter hook input priority 0;
     policy drop;
 
+    # Allow loopback always
     iif lo accept
 
-    tcp dport 443 accept
+    # Allow VPN tunnel port
     udp dport 1194 accept
 
+    # Optional: allow HTTPS if you serve it
+    # tcp dport 443 accept
+
+    # Accept established and related connections
     ct state established,related accept
 
+    # Log and drop everything else
     counter log prefix "Dropped Input: " drop
   }
 
@@ -17,8 +23,10 @@ table inet filter {
     type filter hook forward priority 0;
     policy drop;
 
+    # Include per-client VPN allow rules
     include "/etc/nftables/per-client-rules.nft"
 
+    # Allow replies for established flows
     ct state established,related accept
 
     counter log prefix "Dropped Forward: " drop
