@@ -69,10 +69,10 @@ echo "ifconfig-push 10.8.0.20 255.255.255.0" > ~/vpn-test/ccd/test-client
 
 ### Define Admin and Guest Clients
 
-#### 🎯 Purpose
+#### Purpose
 Use unique cert CNs, static VPN IPs, and nftables to enforce different access levels.
 
-#### 🔐 Generate different certs
+####  Generate different certs
 ```bash
 # Admin cert
 easyrsa gen-req admin-nick nopass
@@ -90,13 +90,13 @@ cp pki/issued/guest-minecraft.crt ~/vpn-test/
 cp pki/private/guest-minecraft.key ~/vpn-test/
 ```
 
-#### 🔐 Map static IPs in CCD
+####  Map static IPs in CCD
 ```bash
 echo "ifconfig-push 10.8.0.10 255.255.255.0" > ~/vpn-test/ccd/admin-nick
 echo "ifconfig-push 10.8.0.20 255.255.255.0" > ~/vpn-test/ccd/guest-minecraft
 ```
 
-#### 🔐 nftables per-client rules example `/etc/nftables/per-client-rules.nft`
+####  nftables per-client rules example `/etc/nftables/per-client-rules.nft`
 ```nft
 # Admin client: full LAN
 ip saddr 10.8.0.10 accept
@@ -106,7 +106,7 @@ ip saddr 10.8.0.20 ip daddr 192.168.0.46 tcp dport 25565 accept
 ip saddr 10.8.0.20 ip daddr 192.168.0.46 udp dport 25565 accept
 ```
 
-#### 🔐 Confirm server.conf includes
+####  Confirm server.conf includes
 ```conf
 client-config-dir /etc/openvpn/ccd
 ccd-exclusive
@@ -159,7 +159,7 @@ Run:
 ```bash
 sudo openvpn --config client.ovpn
 ```
-✅ Tunnel comes up:
+ Tunnel comes up:
 ```
 VERIFY OK
 TUN/TAP device tun0 opened

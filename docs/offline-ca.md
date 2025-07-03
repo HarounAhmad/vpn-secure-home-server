@@ -70,11 +70,11 @@ Copy server.crt, server.key, and ca.crt to the VPN server.
 ```
 
 ## 5️ Best Practices
-✅ Keep ca.key offline at all times.
-✅ Backup pki/ and vars.
-✅ Transfer only signed certs, not private keys.
-✅ Regenerate CRL on any revocation.
-✅ Use strong passphrases if not air-gapped.
+ Keep ca.key offline at all times.
+ Backup pki/ and vars.
+ Transfer only signed certs, not private keys.
+ Regenerate CRL on any revocation.
+ Use strong passphrases if not air-gapped.
 
 
 ## Scripts

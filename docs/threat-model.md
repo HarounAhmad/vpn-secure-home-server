@@ -21,38 +21,38 @@ Document the security assumptions, goals, and limits for this OpenVPN home serve
 ---
 
 ## 4. Threats Covered
-✅ **Port scanning & direct exploits**
+ **Port scanning & direct exploits**
 - Only OpenVPN port is exposed; everything else is LAN-only.
 
-✅ **Credential reuse**
+ **Credential reuse**
 - `duplicate-cn` disabled: one connection per cert.
 - Static IP mapping + nftables prevents shared cert abuse.
 
-✅ **Unauthorized access**
+ **Unauthorized access**
 - No password logins, certs signed offline only.
 - Revocation instantly blocks compromised certs.
 
-✅ **Traffic sniffing & MITM**
+ **Traffic sniffing & MITM**
 - TLS 1.3 enforced with strong ciphers.
 - `tls-crypt` hides handshake metadata.
 
-✅ **Misconfigured services**
+ **Misconfigured services**
 - All containers bind to private interfaces.
 - Firewall rules default-deny by design.
 
 ---
 
 ## 5. Threats Not Covered
-❌ **Physical access to server hardware**
+ **Physical access to server hardware**
 - Disk encryption and physical security are user’s responsibility.
 
-❌ **Compromised client machine**
+ **Compromised client machine**
 - If a device with a cert is infected, attacker can connect until you revoke.
 
-❌ **Insider LAN threats**
+ **Insider LAN threats**
 - VPN clients have scoped access but LAN exploits beyond the server’s control are not blocked.
 
-❌ **Side-channel or quantum crypto attacks**
+ **Side-channel or quantum crypto attacks**
 - Uses best current TLS ciphers but not quantum-resistant.
 
 ---

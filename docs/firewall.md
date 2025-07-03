@@ -6,7 +6,7 @@ Default deny: only explicitly allowed traffic passes.
 
 ---
 
-## 1️⃣ High-Level Flow
+## 1️  High-Level Flow
 [Client cert] → [VPN assigns static IP] → [nftables matches IP rules] → [Allowed services]
 
 Example:
@@ -15,7 +15,7 @@ Example:
 
 ---
 
-## 2️⃣ Static IP Mapping
+## 2️ Static IP Mapping
 Use `client-config-dir` in OpenVPN:
 
 client-config-dir /etc/openvpn/ccd
@@ -26,7 +26,7 @@ ifconfig-push 10.8.0.10 255.255.255.0
 
 ---
 
-## 3️⃣ nftables Base Policy
+## 3️ nftables Base Policy
 
 Sample `nftables/base.nft`:
 ```nft
@@ -89,10 +89,10 @@ ip saddr 10.8.0.20 oif eth0 ip daddr 192.168.0.46 tcp dport 25565 accept
 3: Block everything else by default.
 
 ## 6 Tips
-✅ Test rules with nft list ruleset.
-✅ Log all dropped packets for audit.
-✅ Use nft monitor trace for debugging.
-✅ Reload rules atomically to avoid lockouts.
+ Test rules with nft list ruleset.
+ Log all dropped packets for audit.
+ Use nft monitor trace for debugging.
+ Reload rules atomically to avoid lockouts.
 
 ## 7 Future Enhancements
 * MAC address binding (optional, less reliable with VPN).
