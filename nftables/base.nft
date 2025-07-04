@@ -1,34 +1,29 @@
 table inet filter {
   chain input {
-    type filter hook input priority 0;
-    policy drop;
+    type filter hook input priority 0; policy drop;
 
-    # Allow loopback always
     iif lo accept
-
-    # Allow VPN tunnel port
     udp dport 1194 accept
-
-    # Optional: allow HTTPS if you serve it
-    # tcp dport 443 accept
-
-    # Accept established and related connections
     ct state established,related accept
 
-    # Log and drop everything else
     counter log prefix "Dropped Input: " drop
   }
 
   chain forward {
-    type filter hook forward priority 0;
-    policy drop;
+    type filter hook forward priority 0; policy drop;
 
-    # Include per-client VPN allow rules
-    include "/etc/nftables/per-client-rules.nft"
-
-    # Allow replies for established flows
     ct state established,related accept
 
+    include "/etc/nftables/per-client-rules.nft"
+
     counter log prefix "Dropped Forward: " drop
+  }
+}
+
+table ip nat {
+  chain postrouting {
+    type nat hook postrouting priority 100; policy accept;
+
+    ip saddr 10.8.0.0/24 oif != "tun0" masquerade
   }
 }

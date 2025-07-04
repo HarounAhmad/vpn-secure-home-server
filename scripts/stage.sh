@@ -1,18 +1,24 @@
 #!/bin/bash
 
-mkdir -p ~/vpn-test/pki/issued ~/vpn-test/pki/private ~/vpn-test/ccd
+SRC_CA=~/vpn-ca/easy-rsa/easyrsa3/pki
+SRC_TA=~/vpn-ca/easy-rsa/easyrsa3/ta.key
+SRC_CCD=../openvpn/ccd-example
+SRC_CONF=../openvpn/server.conf
 
-cp ~/vpn-ca/easy-rsa/easyrsa3/pki/ca.crt ~/vpn-test/
-cp ~/vpn-ca/easy-rsa/easyrsa3/pki/issued/server.crt ~/vpn-test/pki/issued/
-cp ~/vpn-ca/easy-rsa/easyrsa3/pki/private/server.key ~/vpn-test/pki/private/
-cp ~/vpn-ca/easy-rsa/easyrsa3/pki/issued/test-client.crt ~/vpn-test/pki/issued/
-cp ~/vpn-ca/easy-rsa/easyrsa3/pki/private/test-client.key ~/vpn-test/pki/private/
-cp ~/vpn-ca/easy-rsa/easyrsa3/pki/crl.pem ~/vpn-test/
-cp ~/vpn-ca/easy-rsa/easyrsa3/ta.key ~/vpn-test/
+DST=~/vpn-test
+PKI_ISSUED=$DST/pki/issued
+PKI_PRIVATE=$DST/pki/private
+CCD=$DST/ccd
 
-# Static IP mapping (per-client)
-cp ../openvpn/ccd-example/* -r ~/vpn-test/ccd/
+mkdir -p "$PKI_ISSUED" "$PKI_PRIVATE" "$CCD"
 
-# server conf
-cp ../openvpn/server.conf -r ~/vpn-test/
+cp "$SRC_CA/ca.crt" "$DST/"
+cp "$SRC_CA/issued/server.crt" "$PKI_ISSUED/"
+cp "$SRC_CA/private/server.key" "$PKI_PRIVATE/"
+cp "$SRC_CA/issued/test-client.crt" "$PKI_ISSUED/"
+cp "$SRC_CA/private/test-client.key" "$PKI_PRIVATE/"
+cp "$SRC_CA/crl.pem" "$DST/"
+cp "$SRC_TA" "$DST/"
 
+cp -r "$SRC_CCD/"* "$CCD/"
+cp "$SRC_CONF" "$DST/"
