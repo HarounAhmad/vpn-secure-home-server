@@ -6,8 +6,14 @@ set -e
 VPN_SERVER=root@your.vpn.server
 REMOTE_PATH=/etc/openvpn/
 
-EASYRSA_DIR=~/vpn-ca/easy-rsa
+EASYRSA_DIR=~/vpn-ca/easy-rsa/easyrsa3
 
-scp "$EASYRSA_DIR/pki/crl.pem" "$VPN_SERVER":"$REMOTE_PATH"
+cd $EASYRSA_DIR
+
+./easyrsa gen-crl
+
+
+#scp "$EASYRSA_DIR/pki/crl.pem" "$VPN_SERVER":"$REMOTE_PATH"
+scp -r ~/vpn-test/* root@vpn.server:/etc/openvpn/
 
 echo "CRL deployed to VPN server. Restart OpenVPN or send HUP."

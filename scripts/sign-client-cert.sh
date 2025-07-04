@@ -9,7 +9,7 @@ if [ -z "$1" ]; then
 fi
 
 CLIENT=$1
-EASYRSA_DIR=~/vpn-ca/easy-rsa
+EASYRSA_DIR=~/vpn-ca/easy-rsa/easyrsa3
 
 cd "$EASYRSA_DIR"
 
@@ -18,3 +18,6 @@ cd "$EASYRSA_DIR"
 
 echo "Client cert signed for $CLIENT"
 echo "Copy: pki/issued/$CLIENT.crt and pki/private/$CLIENT.key"
+echo "don't forget to make a client ccd for the certificate you created"
+echo " echo "ifconfig-push 10.8.0.20 255.255.255.0" > /etc/openvpn/ccd/test-client "
+echo " or create the file manually using a text editor and put it in the files you copy to the server"
