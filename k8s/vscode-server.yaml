@@ -17,18 +17,28 @@ spec:
         image: codercom/code-server
         env:
         - name: PASSWORD
-          value: "ChangeThisPassword"
+          value: "Didi1234"
         ports:
         - containerPort: 8080
+        volumeMounts:
+        - name: vscode-home
+          mountPath: /home/coder/project
+      volumes:
+      - name: vscode-home
+        hostPath:
+          path: /home/server/vscode
+          type: Directory
+ 
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: vscode-service
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: vscode
   ports:
     - port: 8080
       targetPort: 8080
+      nodePort: 30003
