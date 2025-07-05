@@ -17,7 +17,7 @@ spec:
         image: codercom/code-server
         env:
         - name: PASSWORD
-          value: "Didi1234"
+          value: "changeit"
         ports:
         - containerPort: 8080
         volumeMounts:
