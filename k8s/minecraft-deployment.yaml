@@ -44,9 +44,10 @@ kind: Service
 metadata:
   name: minecraft-service
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: minecraft
   ports:
     - port: 25565
       targetPort: 25565
+      nodePort: 31000

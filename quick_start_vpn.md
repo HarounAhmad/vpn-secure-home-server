@@ -32,7 +32,7 @@ Use this script for each new client connecting to the VPN.
 ## 3. Prepare VPN Server Files for Deployment
 
 Script: `stage.sh`
-
+- Takes one argument `<client-cert-destination>`
 - Copies the CA cert, server cert/key, client cert/key, TLS-auth key, CRL, CCD files, and server config into a deployment directory.
 - Creates necessary directories (`pki/issued`, `pki/private`, `ccd`).
 

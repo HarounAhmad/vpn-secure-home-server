@@ -14,6 +14,6 @@ cd $EASYRSA_DIR
 
 
 #scp "$EASYRSA_DIR/pki/crl.pem" "$VPN_SERVER":"$REMOTE_PATH"
-scp -r ~/vpn-test/* root@vpn.server:/etc/openvpn/
+#scp -r ~/vpn-test/* root@vpn.server:/etc/openvpn/
 
-echo "CRL deployed to VPN server. Restart OpenVPN or send HUP."
+echo "CRL created, move it to the server. Restart OpenVPN or send HUP."

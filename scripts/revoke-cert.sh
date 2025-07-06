@@ -17,3 +17,4 @@ cd "$EASYRSA_DIR"
 ./easyrsa gen-crl
 
 echo "Cert for $CLIENT revoked. New crl.pem in pki/."
+echo " don't forget to update the crl using the deploy-crl.sh script"
