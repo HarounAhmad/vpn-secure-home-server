@@ -1,0 +1,14 @@
+- name: Copy stage.sh
+  copy:
+    src: stage.sh
+    dest: "{{ ca_base_dir }}/stage.sh"
+    mode: '0755'
+
+- name: Run stage.sh
+  command: ./stage.sh {{ client_cert_destination }}
+  args:
+    chdir: "{{ ca_base_dir }}"
+  environment:
+    SRC_CA: "{{ ca_base_dir }}/easy-rsa/easyrsa3/pki"
+    SRC_TA: "{{ ca_base_dir }}/easy-rsa/easyrsa3/ta.key"
+    DST: "{{ prepared_files_dir }}"

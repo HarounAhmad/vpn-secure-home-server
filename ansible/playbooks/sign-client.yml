@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: no
+  vars:
+    client_name: alice  # or override with -e
+  tasks:
+    - include_tasks: ../roles/vpn/tasks/sign-client.yml

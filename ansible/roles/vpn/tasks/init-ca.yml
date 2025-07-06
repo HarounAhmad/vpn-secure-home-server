@@ -1,0 +1,12 @@
+- name: Copy init-easyrsa.sh
+  copy:
+    src: init-easyrsa.sh
+    dest: "{{ ca_base_dir }}/init-easyrsa.sh"
+    mode: '0755'
+
+- name: Run init-easyrsa.sh
+  command: ./init-easyrsa.sh
+  args:
+    chdir: "{{ ca_base_dir }}"
+  environment:
+    EASYRSA_DIR: "{{ ca_base_dir }}/easy-rsa"

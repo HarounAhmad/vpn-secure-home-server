@@ -1,0 +1,12 @@
+- name: Copy sign-client-cert.sh
+  copy:
+    src: sign-client-cert.sh
+    dest: "{{ ca_base_dir }}/sign-client-cert.sh"
+    mode: '0755'
+
+- name: Sign client cert
+  command: ./sign-client-cert.sh {{ client_name }}
+  args:
+    chdir: "{{ ca_base_dir }}"
+  environment:
+    EASYRSA_DIR: "{{ ca_base_dir }}/easy-rsa/easyrsa3"

@@ -9,7 +9,7 @@ if [ -z "$1" ]; then
 fi
 
 CLIENT=$1
-EASYRSA_DIR=~/vpn-ca/easy-rsa
+: "${EASYRSA_DIR:=~/vpn-ca/easy-rsa}"
 
 cd "$EASYRSA_DIR"
 

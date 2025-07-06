@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: no
+  vars:
+    client_cert_destination: "{{ prepared_files_dir }}"
+  tasks:
+    - include_tasks: ../roles/vpn/tasks/stage.yml

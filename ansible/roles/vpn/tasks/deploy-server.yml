@@ -1,0 +1,17 @@
+- name: Synchronize prepared files to VPN server
+  synchronize:
+    src: "{{ prepared_files_dir }}/"
+    dest: "{{ openvpn_config_dir }}/"
+    recursive: yes
+
+- name: Copy server-file-setup.sh
+  copy:
+    src: server-file-setup.sh
+    dest: /tmp/server-file-setup.sh
+    mode: '0755'
+
+- name: Run server-file-setup.sh
+  command: /tmp/server-file-setup.sh
+  environment:
+    SRC: "{{ prepared_files_dir }}"
+    DST: "{{ openvpn_config_dir }}"

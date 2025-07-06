@@ -1,0 +1,12 @@
+- name: Copy revoke-cert.sh
+  copy:
+    src: revoke-cert.sh
+    dest: "{{ ca_base_dir }}/revoke-cert.sh"
+    mode: '0755'
+
+- name: Revoke client cert
+  command: ./revoke-cert.sh {{ client_name }}
+  args:
+    chdir: "{{ ca_base_dir }}"
+  environment:
+    EASYRSA_DIR: "{{ ca_base_dir }}/easy-rsa"

@@ -1,0 +1,4 @@
+- hosts: vpn_server
+  gather_facts: no
+  tasks:
+    - include_tasks: ../roles/vpn/tasks/setup-nftables.yml

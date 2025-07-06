@@ -1,0 +1,14 @@
+- name: Copy deploy-crl.sh
+  copy:
+    src: deploy-crl.sh
+    dest: "{{ ca_base_dir }}/deploy-crl.sh"
+    mode: '0755'
+
+- name: Deploy CRL
+  command: ./deploy-crl.sh
+  args:
+    chdir: "{{ ca_base_dir }}"
+  environment:
+    VPN_SERVER: "{{ ansible_user }}@{{ ansible_host }}"
+    REMOTE_PATH: "{{ openvpn_config_dir }}"
+    EASYRSA_DIR: "{{ ca_base_dir }}/easy-rsa/easyrsa3"

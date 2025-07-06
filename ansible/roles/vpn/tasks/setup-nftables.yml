@@ -1,0 +1,8 @@
+- name: Copy setup-nftables.sh
+  copy:
+    src: setup-nftables.sh
+    dest: /tmp/setup-nftables.sh
+    mode: '0755'
+
+- name: Run setup-nftables.sh
+  command: /tmp/setup-nftables.sh

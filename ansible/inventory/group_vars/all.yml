@@ -1,0 +1,3 @@
+ansible_python_interpreter: /usr/bin/python3
+ca_base_dir: /home/YOURUSER/vpn-ca
+prepared_files_dir: /home/YOURUSER/vpn-ca/deploy

@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: no
+  vars:
+    client_name: bob
+  tasks:
+    - include_tasks: ../roles/vpn/tasks/revoke.yml
