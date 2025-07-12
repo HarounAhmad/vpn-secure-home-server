@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: promtail
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: promtail
+  template:
+    metadata:
+      labels:
+        app: promtail
+    spec:
+      serviceAccountName: promtail
+      containers:
+      - name: promtail
+        image: grafana/promtail:latest
+        args:
+          - -config.file=/etc/promtail/promtail.yaml
+        volumeMounts:
+          - name: config
+            mountPath: /etc/promtail
+          - name: varlog
+            mountPath: /var/log
+          - name: systemd
+            mountPath: /run/log/journal
+            readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: promtail-config
+        - name: varlog
+          hostPath:
+            path: /var/log
+            type: Directory
+        - name: systemd
+          hostPath:
+            path: /run/log/journal
+            type: Directory
