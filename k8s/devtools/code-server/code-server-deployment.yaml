@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: code-server
+  namespace: devtools
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: code-server
+  template:
+    metadata:
+      labels:
+        app: code-server
+    spec:
+      containers:
+      - name: code-server
+        image: codercom/code-server:latest
+        ports:
+        - containerPort: 8080
+        env:
+          - name: PASSWORD
+            value: "Didi1234"
+        volumeMounts:
+          - name: files
+            mountPath: /home/coder/files
+      volumes:
+        - name: files
+          hostPath:
+            path: /home/server/files
+            type: Directory

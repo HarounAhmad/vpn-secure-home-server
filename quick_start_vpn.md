@@ -101,3 +101,7 @@ Use this to propagate client revocations to the VPN server.
 
 This setup and scripts assume you have knowledge of Linux, OpenVPN, and basic PKI operations. Use responsibly.
 
+
+### NOTE
+if openvpn has issues when restarting or starting with systemd it is likely that openvpn is looking for a config in /etc/openvpn/server, and the current config is in /etc/openvpn.
+to mitigate this just move the config to the server folder
