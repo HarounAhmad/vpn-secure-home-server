@@ -1,6 +1,6 @@
-# Admin client: full LAN access
-ip saddr 10.8.0.10 accept
-
-# Guest client: only Minecraft server at 192.168.0.46:25565
-ip saddr 10.8.0.20 ip daddr 192.168.0.46 tcp dport 25565 accept
-ip saddr 10.8.0.20 ip daddr 192.168.0.46 udp dport 25565 accept
+ip saddr 10.8.0.10 ip daddr 10.8.0.1 udp dport 53 accept
+ip saddr 10.8.0.10 ip daddr 10.8.0.1 tcp dport 443 accept
+ip saddr 10.8.0.10 ip daddr 10.8.0.1 tcp dport 3000 accept
+ 
+# Guest: allow only DNS
+ip saddr 10.8.0.20 ip daddr 10.8.0.1 udp dport 53 accept

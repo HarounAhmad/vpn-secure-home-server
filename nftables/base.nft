@@ -1,29 +1,36 @@
+#!/usr/sbin/nft -f
+ 
+flush ruleset
+ 
 table inet filter {
   chain input {
     type filter hook input priority 0; policy drop;
-
+ 
     iif lo accept
-    udp dport 1194 accept
     ct state established,related accept
-
-    counter log prefix "Dropped Input: " drop
+ 
+    # Example: allow VPN inbound OpenVPN UDP
+    udp dport 1194 accept
+    include "/etc/nftables/per-client-rules.nft"
+ 
+ 
+ 
+    # Log everything else input
+    counter log prefix "INPUT-DROP: " group 1 drop
   }
-
+ 
   chain forward {
     type filter hook forward priority 0; policy drop;
-
+ 
     ct state established,related accept
-
+ 
     include "/etc/nftables/per-client-rules.nft"
-
-    counter log prefix "Dropped Forward: " drop
+ 
+    # Fallback log + drop
+    counter log prefix "FORWARD-DROP: " group 1 drop
   }
-}
-
-table ip nat {
-  chain postrouting {
-    type nat hook postrouting priority 100; policy accept;
-
-    ip saddr 10.8.0.0/24 oif != "tun0" masquerade
+ 
+  chain output {
+    type filter hook output priority 0; policy accept;
   }
 }
