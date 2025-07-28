@@ -1,6 +1,7 @@
 ip saddr 10.8.0.10 ip daddr 10.8.0.1 udp dport 53 accept
 ip saddr 10.8.0.10 ip daddr 10.8.0.1 tcp dport 443 accept
 ip saddr 10.8.0.10 ip daddr 10.8.0.1 tcp dport 3000 accept
- 
+ ip saddr 10.8.0.10 ip daddr 10.8.0.1 tcp dport 22 accept
+
 # Guest: allow only DNS
 ip saddr 10.8.0.20 ip daddr 10.8.0.1 udp dport 53 accept
